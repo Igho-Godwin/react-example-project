@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{Component} from 'react';
 
-function App() {
+import './App.css';
+import Home from './Home.js';
+import Navbar from './Navbar.js';
+import Contact from './Contact.js';
+import About from './About.js';
+
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+class App extends Component {
+
+  state={
+      
+      nav_hail:'Wow'
+
+  }
+
+  changeHailing = (e) =>{
+
+    let data = e.target.value;
+    this.setState({nav_hail:data});
+  }
+
+  
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <Navbar nav_hail={this.state.nav_hail} />
+        <br></br>
+           
+       <Switch>
+         <Route exact path='/'  render={(props) => <Home {...props} text={this.state.nav_hail} changeHailing={e => this.changeHailing(e)} />} />
+         <Route exact path='/contact' render={(props) => <Contact {...props} text={this.state.nav_hail} />}  />
+         <Route exact path='/about' render={(props) => <About {...props} text={this.state.nav_hail} />}  />
+       </Switch>
+  
+   </Router>
   );
+  }
 }
 
 export default App;
